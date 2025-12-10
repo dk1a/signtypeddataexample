@@ -68,7 +68,7 @@ export default function SignatureWrapper() {
       domain,
       // MUD's CallWithSignature type definitions
       types,
-      primaryType: "Call",
+      primaryType: "Asd",
       // Message contains all call details + nonce
       message
     })
@@ -83,7 +83,7 @@ export default function SignatureWrapper() {
       <Signature
         domain={domain}
         types={types}
-        primaryType="Call"
+        primaryType="Asd"
         message={{
           signer: connectorClient?.account.address,
           systemNamespace: "world",
