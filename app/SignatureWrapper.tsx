@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { signTypedData } from 'viem/actions';
 import { base } from 'viem/chains';
 import { getAction, toHex } from 'viem/utils';
-import { useConnectorClient } from 'wagmi';
+import { useConnectorClient, useSignTypedData } from 'wagmi';
 
 export default function SignatureWrapper() {
   const [signature, setSignature] = useState<string | null>(null);
@@ -13,6 +13,8 @@ export default function SignatureWrapper() {
     verifyingContract: "0x28d10E6aAb1a749Be792b4D8aa0519c70E83386a",
     salt: toHex(base.id, { size: 32 })
   } as const;
+
+  const { signTypedDataAsync } = useSignTypedData()
 
   const types = {
     Call: [
@@ -38,11 +40,13 @@ export default function SignatureWrapper() {
       nonce: 2n
     } as const;
 
-    const result = await getAction(
+    const action = getAction(
       connectorClient,
       signTypedData,
       "signTypedData"
-    )({
+    )
+
+    const result = await signTypedDataAsync({
       account: connectorClient.account,
       // EIP-712 domain bound to World contract and chain
       domain,
