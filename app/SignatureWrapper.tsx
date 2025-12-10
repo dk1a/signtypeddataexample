@@ -17,9 +17,10 @@ export default function SignatureWrapper() {
   const { signTypedDataAsync } = useSignTypedData()
 
   const types = {
-    Call: [
-      { name: 'signer', type: 'address' },
-      /*{ name: 'systemNamespace', type: 'string' },
+    Asd: [
+      { name: 'systemNamespace', type: 'string' },
+      /*{ name: 'signer', type: 'address' },
+      { name: 'systemNamespace', type: 'string' },
       { name: 'systemName', type: 'string' },
       { name: 'callData', type: 'bytes' },
       { name: 'nonce', type: 'uint256' },*/
@@ -27,12 +28,13 @@ export default function SignatureWrapper() {
   } as const;
 
   const message = {
-      signer: connectorClient?.account.address ?? "0x",
-      /*systemNamespace: "world",
-      systemName: "RegistrationSystem",
-      callData: "0x01020304050607080910",
-      nonce: 2n*/
-    } as const;
+    systemNamespace: "world",
+    /*signer: connectorClient?.account.address ?? "0x",
+    systemNamespace: "world",
+    systemName: "RegistrationSystem",
+    callData: "0x01020304050607080910",
+    nonce: 2n*/
+  } as const;
 
   async function onClick1() {
     const result = await signTypedDataAsync({
@@ -41,7 +43,7 @@ export default function SignatureWrapper() {
       domain,
       // MUD's CallWithSignature type definitions
       types,
-      primaryType: "Call",
+      primaryType: "Asd",
       // Message contains all call details + nonce
       message
     })
