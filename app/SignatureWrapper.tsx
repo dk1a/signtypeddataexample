@@ -46,7 +46,7 @@ export default function SignatureWrapper() {
         onSuccess={(signature: string) => setSignature(signature)}
         onError={(e) => console.error(e)}
       />
-      <p>Signature: {signature}</p>
+      <p style={{ overflowWrap: "anywhere" }}>Signature: {signature}</p>
     </div>
   );
 }
