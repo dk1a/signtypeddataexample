@@ -27,7 +27,7 @@ export default function SignatureWrapper() {
   } as const;
 
   const message = {
-      signer: connectorClient?.account.address,
+      signer: connectorClient?.account.address ?? "0x",
       systemNamespace: "world",
       systemName: "RegistrationSystem",
       callData: "0x01020304050607080910",
