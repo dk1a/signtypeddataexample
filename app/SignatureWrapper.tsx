@@ -11,7 +11,7 @@ export default function SignatureWrapper() {
 
   const domain = {
     verifyingContract: "0x28d10E6aAb1a749Be792b4D8aa0519c70E83386a",
-    salt: toHex(base.id, { size: 32 })
+    //salt: toHex(base.id, { size: 32 })
   } as const;
 
   const { signTypedDataAsync } = useSignTypedData()
@@ -19,19 +19,19 @@ export default function SignatureWrapper() {
   const types = {
     Call: [
       { name: 'signer', type: 'address' },
-      { name: 'systemNamespace', type: 'string' },
+      /*{ name: 'systemNamespace', type: 'string' },
       { name: 'systemName', type: 'string' },
       { name: 'callData', type: 'bytes' },
-      { name: 'nonce', type: 'uint256' },
+      { name: 'nonce', type: 'uint256' },*/
     ],
   } as const;
 
   const message = {
       signer: connectorClient?.account.address ?? "0x",
-      systemNamespace: "world",
+      /*systemNamespace: "world",
       systemName: "RegistrationSystem",
       callData: "0x01020304050607080910",
-      nonce: 2n
+      nonce: 2n*/
     } as const;
 
   async function onClick1() {
