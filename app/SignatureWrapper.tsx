@@ -11,7 +11,7 @@ export default function SignatureWrapper() {
   const domain = {
     name: 'test123',
     //version: '1.0.0',
-    //chainId: base.id,
+    chainId: base.id,
     verifyingContract: '0x28d10E6aAb1a749Be792b4D8aa0519c70E83386a',
     salt: toHex(base.id, { size: 32 })
   } as const;
