@@ -1,10 +1,12 @@
 import { Signature } from '@coinbase/onchainkit/signature';
 import { useState } from 'react';
-import { encodeAbiParameters, toHex } from 'viem';
+import { toHex } from 'viem';
 import { base } from 'viem/chains';
+import { useAccount } from 'wagmi';
 
 export default function SignatureWrapper() {
   const [signature, setSignature] = useState<string | null>(null);
+  const { address } = useAccount()
 
   const domain = {
     name: 'test123',
@@ -15,25 +17,21 @@ export default function SignatureWrapper() {
   } as const;
 
   const types = {
-    Attest: [
-      { name: 'schema', type: 'bytes32' },
-      { name: 'recipient', type: 'address' },
-      { name: 'time', type: 'uint64' },
-      { name: 'revocable', type: 'bool' },
-      { name: 'refUID', type: 'bytes32' },
-      { name: 'data', type: 'bytes' },
-      { name: 'value', type: 'uint256' },
+    Call: [
+      { name: 'signer', type: 'address' },
+      { name: 'systemNamespace', type: 'string' },
+      { name: 'systemName', type: 'string' },
+      { name: 'callData', type: 'bytes' },
+      { name: 'nonce', type: 'uint256' },
     ],
   } as const;
 
   const message = {
-    schema: '0xf58b8b212ef75ee8cd7e8d803c37c03e0519890502d5e99ee2412aae1456cafe',
-    recipient: '0x1230000000000000000000000000000000000000',
-    time: BigInt(0),
-    revocable: false,
-    refUID: '0x0000000000000000000000000000000000000000000000000000000000000000',
-    data: encodeAbiParameters([{ type: 'string' }], ['test attestation']),
-    value: BigInt(0),
+    signer: address,
+    systemNamespace: "world",
+    systemName: "RegistrationSystem",
+    callData: "0x01020304050607080910",
+    nonce: 2n
   } as const;
 
   return (
@@ -41,7 +39,7 @@ export default function SignatureWrapper() {
       <Signature
         domain={domain}
         types={types}
-        primaryType="Attest"
+        primaryType="Call"
         message={message}
         label="Sign EIP712"
         onSuccess={(signature: string) => setSignature(signature)}
